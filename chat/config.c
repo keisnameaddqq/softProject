@@ -2,13 +2,13 @@
 #include <time.h>
 
 char* getTimeString() {
-    time_t t;
-    time(&t);
-    char* timeStr = ctime(&t);
-    int len = strlen(timeStr);
-    if (timeStr[len - 1] == '\n')
-        timeStr[len - 1] = '\0'; // 替换换行符为字符串结束符
-    return timeStr;
+//    time_t t;
+//    time(&t);
+//    char* timeStr = ctime(&t);
+//    int len = strlen(timeStr);
+//    if (timeStr[len - 1] == '\n')
+//        timeStr[len - 1] = '\0'; // 替换换行符为字符串结束符
+//    return timeStr;
 }
 
 void load_config() {
