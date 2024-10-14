@@ -20,5 +20,5 @@
 信息结构体文件:clientinfo.h
                 该头文件需要包括在客户端和服务端中，保证通信的结构体的一致性
 
-线程池的实现:wcy_threadpool.h  wcy_threadpool.c
+线程池的实现:wcy_threadpool.h  wcy_threadpool.c -------------------
             规模参数由config.ini中规定，并且新增THREAD_POOL设置线程池日志文件
