@@ -1,0 +1,35 @@
+@font-face {  /* 声明字体 */
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?8qhwk5');
+  src:  url('../fonts/icomoon.eot?8qhwk5#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?8qhwk5') format('truetype'),
+    url('../fonts/icomoon.woff?8qhwk5') format('woff'),
+    url('../fonts/icomoon.svg?8qhwk5#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.question{
+    margin-bottom: 20px;
+     border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgb(218, 218, 218);
+}
+.question a{
+    color:black;
+    text-decoration: none;
+    font-size: 20px;
+}
+.question a i{
+    font-family: "icomoon";
+    font-style: normal;
+}
+.question ul{
+    transform: translateY(-36px);
+    font-size: 18px;
+    color: #8590A6;
+    list-style: none;
+}
+.question li{
+    float: right;
+}

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bass.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/zhuyeadd.css">
+    <style>
+        #coverDiv{
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .pppfasdfa li {
+            cursor: pointer;
+        }
+        .pppfasdfa li.active {
+            border-bottom: 2px solid #007BFF; /* 添加下边框的样式，可以根据需要调整颜色和粗细 */
+        }
+        .dfasfdasdfas {
+            padding: 30px;
+            height: auto;
+            min-height: 400px;
+            background-color: beige;
+        }
+    </style>
+    <script>
+        function touchup(i) {
+            var arr = document.getElementById(i);
+            var brr = document.getElementById(i + 5);
+            arr.innerHTML = "<i> 已赞同 234</i>";
+            arr.style.backgroundColor = '#34ce34';
+            arr.style.color = '#fff';
+            brr.style.backgroundColor = '#e9ffe9';
+            brr.style.color = '#34ce34'
+        }
+        function touchdown(i) {
+            var arr = document.getElementById(i);
+            var brr = document.getElementById(i - 5);
+            arr.style.backgroundColor = '#34ce34';
+            arr.style.color = '#fff'
+            brr.innerHTML = "<i> 赞同 233</i>";
+            brr.style.backgroundColor = '#e9ffe9';
+            brr.style.color = '#34ce34';
+        }
+    </script>
+</head>
+
+<body>
+
+    <!--特效-->
+<!--    <script src="./js/背景特效.js"></script>-->
+    <span class="js-cursor-container"></span>
+<!--    <script src="./js/鼠标特效.js"></script>-->
+<!--    <script src="./js/鼠标声效.js"></script>-->
+    <!-- 获取必要的用户信息-->
+    <script src="./js/caozuojs/获取用户必要信息.js"></script>
+    <!-- 头部导航栏 -->
+    <header class="table-bordered" style=" background-color: #11789664;">
+        <div class="h container row ">
+            <a href="./index.html"><img src="./images/logo.png" alt="" width="80px" height="40px" class="col-sm-1 "></a>
+            <div class="container col-sm-9 ">
+                <ul class="headlist col-sm-4 row-no-gutters">
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list1" href="./finishlogin.html" style="font-weight: 700;">首页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list2" href="./main.html">主页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list3" href="./editer.html">个人创作</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list4" href="./create.html">主题创作</a></li>
+                </ul>
+                <div class="col-sm-7 col-sm-offset-1 row-no-gutters">
+                    <input type="search" placeholder="想看什么文章呢？" class="col-sm-8" style="padding-left: 10px;" id="searchInput">
+                    <button type="button" class="btn btn-success col-sm-1" onclick="getSearchInputValue()" id="searchInputclick"><i></i></button>
+                    <button type="button" class="btn btn-success col-sm-2 col-sm-offset-1">提问</button>
+                </div>
+            </div>
+            <div class=" col-sm-2 login">
+                <a href="#" class="col-sm-3" title="信息"><i></i></a>
+                <a class="col-sm-6" id="wqerqwerqqrerqwerqwreqrq" src="./menduserdata.html">
+                    <img height='40px' src="" alt='用户头像' id="sdfadsfadfasdffds">
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- 处理查询的跳转-->
+    <script src="./js/caozuojs/处理导航连接.js"></script>
+
+    <!-- 第一部分-->
+    <div class="zhuyefirst">
+        <div class="beijing ppdiv" id="coverDiv">
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <button onclick="uploadCoverImage()" class="opuoiu">
+            <span style="display: inline-flex; align-items: center;">
+              ​<svg width="1.2em" height="1.2em" viewBox="0 0 24 24" class="Zi Zi--Camera" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M7.394 4.814A2.41 2.41 0 0 1 9.65 3.25h4.7a2.41 2.41 0 0 1 2.256 1.564l.539 1.436h2.195a2.41 2.41 0 0 1 2.41 2.41v9.68a2.41 2.41 0 0 1-2.41 2.41H4.66a2.41 2.41 0 0 1-2.41-2.41V8.66a2.41 2.41 0 0 1 2.41-2.41h2.195l.539-1.436ZM13.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                      clip-rule="evenodd"></path>
+              </svg>上传封面图片
+            </span></button>
+        </div>
+        <!-- 对背景进行初始设置-->
+        <script>
+            // 获取 coverDiv 元素
+            var coverDiv = document.getElementById("coverDiv");
+            var timestamp = new Date().getTime(); // 获取当前的时间戳
+            // 构建图片路径
+            var imagePath = './userBeiJing/' + userId + '.png?ver=' + timestamp;
+            // 检查图片是否存在
+            imageExists(imagePath, function (exists) {
+                if (exists) {
+                    // 设置背景图片样式
+                    coverDiv.style.backgroundImage = 'url("' + imagePath + '")';
+                }
+            });
+            // 检查图片是否存在的函数
+            function imageExists(url, callback) {
+                var img = new Image();
+                img.onload = function () {callback(true);};
+                img.onerror = function () {callback(false);};
+                img.src = url;
+            }
+        </script>
+        <!-- 第一部分中修改背景图片的js代码-->
+        <script>
+            async function uploadCoverImage() {
+                const fileInput = document.getElementById('fileInput');
+                fileInput.click();
+                fileInput.addEventListener('change', async (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const formData = new FormData();
+                        formData.append('coverImage', file);
+                        formData.append('userId', userId);
+                        formData.append('token', token);
+                        console.log("userId:"+userId+" 上传了背景图片");
+                        try {
+                            const response = await fetch('./uploadCoverImage', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const result = await response.text();
+                            if (result==="true") {
+                                var coverDiv = document.getElementById("coverDiv");// 获取 coverDiv 元素
+                                var timestamp = new Date().getTime(); // 获取当前的时间戳
+                                const urlp='./userBeiJing/' + userId + '.png?ver=' + timestamp;
+                                console.log(urlp)
+                                coverDiv.style.backgroundImage = "url('')"; // 先清空背景图片
+                                setTimeout(function(){ // 延迟一段时间再设置新的背景图片
+                                    coverDiv.style.backgroundImage = "url("+urlp+")";// 设置背景图片样式
+                                }, 1000);
+                                console.log('图片上传成功！');
+                                alert("图片上传成功！");
+                            } else {
+                                console.log('图片上传失败。');
+                                alert("图片上传失败！请重新上传！")
+                            }
+                        } catch (error) {
+                            console.error('上传图片时出错：', error);
+                        }
+                    }
+                });
+            }
+        </script>
+
+
+        <div class="nameandata ppdiv">
+            <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
+            <img src="" class="zhuyefirstson" id="sdfadsfadfasdffdsfasdfadf">
+            <div style="position: absolute;top: 0px;left: -20px;">
+                <span style="margin-left: 250px;" class="pfasdfsd1">昵称：</span>
+                <div class="namefadsfsadfa">
+                    <span id="nicknameInput"></span>
+                </div>
+                <button onclick="changeNickname()">更改昵称</button>
+                <span style="margin-left: 30px;" class="pfasdfsd2">个性签名：</span>
+                <div class="namefadsfsadfa" style="width: 250px;height: 20px;word-break: break-all">
+                    <span id="signatureInput"></span>
+                </div>
+                <button onclick="changeSignature()">更改个性签名</button>
+            </div>
+        </div>
+
+        <!-- 更改昵称-->
+        <script>
+            async function changeNickname() {
+                const nicknameInput = document.getElementById("nicknameInput");
+                const newNickname = prompt("请输入新的昵称：", ""); // 使用prompt弹出输入框
+                if (newNickname !== null) { // 用户点击取消时，prompt返回null
+                    if (newNickname.length > 5) {
+                        alert("昵称的长度要<=5！请重新输入！");
+                        return;
+                    }
+                    if (newNickname.length <= 0) {
+                        alert("昵称的长度要>=1！请重新输入！");
+                        return;
+                    }
+                    nicknameInput.innerHTML = await uploadData("./updataNickname", newNickname);
+                    console.log("nicknameInput.innerHTML="+nicknameInput.innerHTML);
+                }
+            }
+            async function uploadData(address,data) {
+                const formData = new FormData();
+                formData.append('data', data);
+                formData.append('userId', userId);
+                formData.append('token', token);
+                console.log("userId:" + userId + " 上传"+data+"到"+address);
+                try {
+                    const response = await fetch(address, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const p=await response.text();
+                    console.log("return = "+p);
+                    return p;
+                } catch (error) {
+                    console.error('上传头像时出错：', error);
+                }
+            }
+        </script>
+        <!-- 初始化昵称-->
+        <script>
+            document.addEventListener("DOMContentLoaded", async function() {
+                const nicknameInput = document.getElementById("nicknameInput");
+                nicknameInput.innerHTML = await uploadData("./updataNickname", "");
+                console.log("nicknameInput.innerHTML="+nicknameInput.innerHTML);
+            });
+        </script>
+
+        <!-- 更改个性签名-->
+        <script>
+            async function changeSignature() {
+                const signatureInput = document.getElementById("signatureInput");
+                const newSignature = prompt("请输入新的个性签名：", ""); // 使用prompt弹出输入框
+                if (newSignature !== null) { // 用户点击取消时，prompt返回null
+                    if (newSignature.length > 15) {
+                        alert("个性签名的长度要<=15！请重新输入！");
+                        return;
+                    }
+                    if (newSignature.length <= 0) {
+                        alert("个性签名的长度要>=1！请重新输入！");
+                        return;
+                    }
+                    console.log(newSignature + "1");
+                    signatureInput.innerHTML = await uploadData("./updataSignature", newSignature);
+                    console.log("signatureInput.innerHTML="+signatureInput.innerHTML);
+                }
+            }
+        </script>
+        <!-- 初始化个性签名-->
+        <script>
+            document.addEventListener("DOMContentLoaded",async function() {
+                const signatureInput = document.getElementById("signatureInput");
+                signatureInput.innerHTML = await uploadData("./updataSignature", "");
+                console.log("signatureInput.innerHTML="+signatureInput.innerHTML);
+            });
+        </script>
+
+        <!-- 对头像进行初始设置-->
+        <script>
+            var timestamp = new Date().getTime();
+            document.getElementById('sdfadsfadfasdffdsfasdfadf').setAttribute("src",
+                './userTouXiang/' + userId + '.png?ver=' + timestamp);
+        </script>
+        <!-- 对头像进行更改设置-->
+        <script>
+            // 添加此事件监听器以在点击个人头像时触发文件输入
+            document.getElementById('sdfadsfadfasdffdsfasdfadf').addEventListener('click', function () {
+                console.log("profilePictureInput1");
+                // 调用处理个人头像上传的函数
+                uploadProfilePicture();
+                console.log("profilePictureInput2");
+            });
+            // 更新现有的uploadCoverImage函数以处理个人头像的上传
+            async function uploadProfilePicture() {
+                console.log("profilePictureInput3");
+                const fileInput = document.getElementById('profilePictureInput');
+                fileInput.click();
+                console.log("profilePictureInput4");
+                fileInput.addEventListener('change', async (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const formData = new FormData();
+                        formData.append('profilePicture', file);
+                        formData.append('userId', userId);
+                        formData.append('token', token);
+                        console.log("userId:" + userId + " 上传了头像");
+                        try {
+                            const response = await fetch('./uploadProfilePicture', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const result = await response.text();
+                            if (result === "true") {
+                                var profilePicture = document.getElementById("sdfadsfadfasdffdsfasdfadf");
+                                var timestamp = new Date().getTime();
+                                const urlp = './userTouXiang/' + userId + '.png?ver=' + timestamp;
+                                profilePicture.setAttribute("src", urlp);
+                                console.log('头像上传成功！');
+                                alert("头像上传成功！");
+                            } else {
+                                console.log('头像上传失败。');
+                                alert("头像上传失败！请重新上传！");
+                            }
+                        } catch (error) {
+                            console.error('上传头像时出错：', error);
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+
+    <!-- 第二部分-->
+    <div class="zhuyesecond">
+        <div class="zhuyefirstsecondson">
+            <div class="ProfileMain-header">
+                <ul class="pppfasdfa">
+                    <li onclick="GetDongTai(event)" id="listpp1">动态</li>
+                    <li onclick="MoRenPersonImage(event)" id="listpp2">回答</li>
+                    <li onclick="MoRenPersonImage(event)" id="listpp3">视频</li>
+                    <li onclick="MoRenPersonImage(event)" id="listpp4">提问</li>
+                    <li onclick="MoRenPersonImage(event)" id="listpp5">文章</li>
+                    <li onclick="MoRenPersonImage(event)" id="listpp6">专栏</li>
+                    <li onclick="MoRenPersonImage(event)" id="listpp7">想法</li>
+                    <li onclick="GetShouCang(event)" id="listpp8">收藏</li>
+                    <li onclick="GetGuanZhu(event)" id="listpp9">关注</li>
+                    <li onclick="GetPersonImage(event)" id="listpp10">相册</li>
+                </ul>
+            </div>
+            <input type="file" id="personFileInput" accept="image/*" style="display: none;" multiple>
+            <div class="dfasfdasdfas" id="fasfdasfasdfsasdfsdfa">
+                暂无内容
+            </div>
+        </div>
+        <!-- 扩展模块 -->
+        <div class="col-sm-3 expand ">
+            <div class="block-">
+                <img src="./images/czzx.png" width="292px" alt="" usemap="#create">
+                <map id="create" name="create">
+                    <area shape="rect" coords="0,0,120,50" title="创作中心" href="#">
+                    <area shape="rect" coords="185,0,310,50" title="草稿箱" href="#">
+                    <area shape="rect" coords="0,240,310,300" title="开始你的创作" href="" id="fasdfhkalfhasdkfhfsafl">
+                    <area shape="circle" coords="42.8,77.8,40" title="回答问题" href="#">
+                    <area shape="circle" coords="115.8,77.8,40" title="发视频" href="#">
+                    <area shape="circle" coords="188.8,77.8,40" title="写文章" href="#">
+                    <area shape="circle" coords="261.8,77.8,40" title="写想法" href="#">
+                </map>
+            </div>
+            <script>
+                //设置扩展栏的连接地址
+                document.getElementById('fasdfhkalfhasdkfhfsafl').setAttribute('href',
+                    "./create.html"+userdata);
+            </script>
+            <div class="block-">
+                <ul>
+                    <li><a href="#"><i> 我的收藏</i></a></li>
+                    <li><a href="#"><i> 我的关注</i></a></li>
+                    <li><a href="#"><i> 我的好友</i></a></li>
+                    <li><a href="#"><i> 我的申请</i></a></li>
+                    <li><a id="mygameid">
+                        <img data-v-2495b3ee="" style="height: 16px;width: 16px" srcset="https://img.icons8.com/?size=50&amp;id=7314&amp;format=png 1x, https://img.icons8.com/?size=100&amp;id=7314&amp;format=png 2x" width="50" height="50" alt="Game icon" style="filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(228deg) brightness(94%) contrast(106%);">
+                        石头剪刀布</a></li>
+                    <li><a href="./login.html"><i>
+                        <svg class="icon" style="width: 1em;height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7066">
+                            <path d="M543.872 522.837V159.83c0-17.578-8.32-31.829-31.872-31.829s-36.31 14.25-36.31 31.83v363.007c0 17.579 12.758 31.83 36.31 31.83s31.872-14.251 31.872-31.83zM832.81 310.528a382.805 382.805 0 0 0-163.285-136.96 33.92 33.92 0 0 0-44.586 16.64 32.939 32.939 0 0 0 16.896 43.861c113.45 50.262 186.752 161.792 186.752 284.16 0 171.734-142.038 311.467-316.587 311.467-174.55 0-316.587-139.733-316.587-311.467 0-120.96 72.107-231.978 183.766-282.794a32.939 32.939 0 0 0 16.426-44.032 33.963 33.963 0 0 0-44.8-16.171 382.848 382.848 0 0 0-160.682 136.96A371.968 371.968 0 0 0 128 518.187c0 50.986 10.155 100.437 30.208 147.072a376.192 376.192 0 0 0 82.261 120.064 383.104 383.104 0 0 0 122.027 80.938A387.072 387.072 0 0 0 512 896a387.072 387.072 0 0 0 149.461-29.696 383.147 383.147 0 0 0 122.07-80.939 376.192 376.192 0 0 0 82.261-120.064A370.176 370.176 0 0 0 896 518.23a371.84 371.84 0 0 0-63.19-207.701z" p-id="7067">
+                            </path></svg>
+                        注销登录</i></a></li>
+                </ul>
+                <script>
+                    document.getElementById("mygameid").setAttribute("href",
+                        "./game.html"+userdata);
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- 处理动态模块-->
+    <script>
+        //处理动态模块
+        async function GetDongTai(event) {
+            // 在这里移除所有列表项的活动状态
+            const listItems = document.querySelectorAll('.pppfasdfa li');
+            listItems.forEach(item => item.classList.remove('active'));
+            // 在这里添加当前点击的列表项的活动状态
+            const clickedItem = event.target;  // 如果不传递事件对象，这一行需要删除
+            clickedItem.classList.add('active');
+            const parentDiv = document.getElementById("fasfdasfasdfsasdfsdfa");// 获取父DIV
+            parentDiv.innerHTML = "";
+            const childDiv = document.createElement("div");// 创建一个新的子DIV
+            childDiv.id = "dongtaidiv";// 设置子DIV的ID
+            parentDiv.appendChild(childDiv);// 将子DIV添加到父DIV中
+            //沟通服务获取收藏列表,调用getShouCangDiv分装收藏列表
+            const formData = new FormData(); // 创建一个FormData对象
+            formData.append('userId', userId);
+            formData.append('token', token);
+            console.log("formData=" + formData);
+            try {
+                const response = await fetch("./GetMyDongTaiList", {
+                    method: 'POST',
+                    body: formData,
+                });
+                //articleId 0 和 authorid 1 和 authorNickname 2 和 title 3 和 dianzang 4 和 pinglun 5 和 timestampinminutes 6
+                const dongTaiArticle = await response.json();
+                console.log("dongTaiArticle = " + dongTaiArticle);
+                if(dongTaiArticle.size==0){
+                    childDiv.innerText = "动态";
+                }
+                for (const Article of dongTaiArticle) {
+                    childDiv.innerHTML += getDongTaiDiv(Article[1], Article[0], Article[2], Article[3],
+                        formatTimestampInMinutes(Article[6]), Article[4], Article[5],userdata);
+                }
+            } catch (e) {
+                alert("获取动态数据失败！");
+            }
+        }
+    </script>
+
+
+    <!-- 处理关注和收藏模块-->
+    <script src="js/caozuojs/个人页面的关注和收藏和动态的装饰.js"></script>
+    <script src="./js/caozuojs/个人页面删除关注和删除收藏的处理.js"></script>
+    <script>
+        //处理收藏模块
+        async function GetShouCang(event) {
+            // 在这里移除所有列表项的活动状态
+            const listItems = document.querySelectorAll('.pppfasdfa li');
+            listItems.forEach(item => item.classList.remove('active'));
+            // 在这里添加当前点击的列表项的活动状态
+            const clickedItem = event.target;  // 如果不传递事件对象，这一行需要删除
+            clickedItem.classList.add('active');
+            const parentDiv = document.getElementById("fasfdasfasdfsasdfsdfa");// 获取父DIV
+            parentDiv.innerHTML = "";
+            const childDiv = document.createElement("div");// 创建一个新的子DIV
+            childDiv.id = "shoucangdiv";// 设置子DIV的ID
+            parentDiv.appendChild(childDiv);// 将子DIV添加到父DIV中
+            //沟通服务获取收藏列表,调用getShouCangDiv分装收藏列表
+            const formData = new FormData(); // 创建一个FormData对象
+            formData.append('userId', userId);
+            formData.append('token', token);
+            console.log("formData=" + formData);
+            try {
+                const response = await fetch("./GetMyShouCangList", {
+                    method: 'POST',
+                    body: formData,
+                });
+                //articleId 0 和 authorid 1 和 authorNickname 2 和 title 3 和 dianzang 4 和 pinglun 5 和 timestampinminutes 6
+                const shouCangArticle = await response.json();
+                console.log("shouCangArticle = " + shouCangArticle);
+                if(shouCangArticle.size==0){
+                    childDiv.innerText = "暂无收藏";
+                }
+                for (const Article of shouCangArticle) {
+                    childDiv.innerHTML += getShouCangDiv(Article[1], Article[0], Article[2], Article[3],
+                            formatTimestampInMinutes(Article[6]), Article[4], Article[5],userdata);
+                }
+            } catch (e) {
+                alert("获取收藏数据失败！");
+            }
+        }
+        //分钟级别的时间戳的转换
+        function formatTimestampInMinutes(timestampInMinutes) {
+            // 将分钟时间戳转换为毫秒
+            let timestampInMilliseconds = timestampInMinutes * 60 * 1000;
+            // 创建 Date 对象
+            let date = new Date(timestampInMilliseconds);
+            // 获取年、月、日、小时和分钟
+            let year = date.getFullYear();
+            let month = ('0' + (date.getMonth() + 1)).slice(-2); // 注意月份是从 0 开始的，所以要加 1
+            let day = ('0' + date.getDate()).slice(-2);
+            let hours = ('0' + date.getHours()).slice(-2);
+            let minutes = ('0' + date.getMinutes()).slice(-2);
+            // 构建格式化的时间字符串
+            let formattedTimestamp = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+            return formattedTimestamp;
+        }
+        //处理关注模块
+        async function GetGuanZhu(event) {
+            // 在这里移除所有列表项的活动状态
+            const listItems = document.querySelectorAll('.pppfasdfa li');
+            listItems.forEach(item => item.classList.remove('active'));
+            // 在这里添加当前点击的列表项的活动状态
+            const clickedItem = event.target;  // 如果不传递事件对象，这一行需要删除
+            clickedItem.classList.add('active');
+            const parentDiv = document.getElementById("fasfdasfasdfsasdfsdfa");// 获取父DIV
+            parentDiv.innerHTML = "";
+            const childDiv = document.createElement("div");// 创建一个新的子DIV
+            childDiv.id = "shoucangdiv";// 设置子DIV的ID
+            parentDiv.appendChild(childDiv);// 将子DIV添加到父DIV中
+            //沟通服务获取关注列表,调用getGuanZhuDiv分装关注列表
+            const formData = new FormData(); // 创建一个FormData对象
+            formData.append('userId', userId);
+            formData.append('token', token);
+            console.log("formData=" + formData);
+            try {
+                const response = await fetch("./GetMyGuanZhuList", {
+                    method: 'POST',
+                    body: formData,
+                });
+                //authorid 0 和 authorNickname 1 和 authorSignature 2 和 articleNumber 3 和 fanNumber 4
+                const guanZhuAuthors = await response.json();
+                console.log("guanZhuAuthors = " + guanZhuAuthors);
+                if (guanZhuAuthors.size == 0) {
+                    childDiv.innerText = "暂无关注";
+                }
+                for (const guanZhuAuthor of guanZhuAuthors) {
+                    childDiv.innerHTML += getGuanZhuDiv(guanZhuAuthor[0],
+                        guanZhuAuthor[1], guanZhuAuthor[2], guanZhuAuthor[3], guanZhuAuthor[4]);
+                }
+            } catch (e) {
+                alert("获取关注数据失败！");
+            }
+        }
+    </script>
+
+    <!-- 处理个人相册模块-->
+    <script>
+        function MoRenPersonImage(event) {
+            // 在这里移除所有列表项的活动状态
+            const listItems = document.querySelectorAll('.pppfasdfa li');
+            listItems.forEach(item => item.classList.remove('active'));
+            // 在这里添加当前点击的列表项的活动状态
+            const clickedItem = event.target;  // 如果不传递事件对象，这一行需要删除
+            clickedItem.classList.add('active');
+            document.getElementById("fasfdasfasdfsasdfsdfa").innerHTML="暂无内容";
+        }
+        function GetPersonImage(event) {
+            // 在这里移除所有列表项的活动状态
+            const listItems = document.querySelectorAll('.pppfasdfa li');
+            listItems.forEach(item => item.classList.remove('active'));
+            // 在这里添加当前点击的列表项的活动状态
+            const clickedItem = event.target;  // 如果不传递事件对象，这一行需要删除
+            clickedItem.classList.add('active');
+            document.getElementById("fasfdasfasdfsasdfsdfa").innerHTML=
+                "<button onclick=\"AddPersonImage('add')\" style=\"margin-bottom:20px;\">添加照片</button><br>";
+            AddPersonImage('getall');
+        }
+        async function AddPersonImage(need, op = "") {
+            console.log("need=" + need);
+            let files = null;
+            let deleteurl = "";
+            let fileInput = document.getElementById("personFileInput");
+            if (need === "add") {
+                await new Promise(resolve => {
+                    fileInput.addEventListener("change", () => {
+                        files = fileInput.files; // 获取上传的文件数组
+                        console.log(files);
+                        resolve();
+                    }, { once: true });
+                    fileInput.click();
+                });
+                console.log(files);
+            }
+            if (files == null){
+                if(need==="delete"){
+                    if(window.confirm("你确定要删除该图片吗？")){
+                        sendPersonImage(need,"",op);
+                    }
+                } else {
+                    sendPersonImage(need,"",op);
+                }
+            } else {
+                // 将每个文件附加到FormData对象
+                for (let i = 0; i < files.length; i++) {
+                    sendPersonImage(need,files[i],op);
+                }
+            }
+        }
+        async function sendPersonImage(need,file,deleteurl) {
+            const formData = new FormData(); // 创建一个FormData对象
+            formData.append('Image', file);
+            formData.append('deleteurl', deleteurl);
+            formData.append('need', need);
+            formData.append('userId', userId);
+            formData.append('token', token);
+            console.log("formData=" + formData);
+            try {
+                const response = await fetch("./addpersonimage", {
+                    method: 'POST',
+                    body: formData,
+                });
+                const allpictureurl = await response.json();
+                console.log("allpictureurl = " + allpictureurl);
+                // 根据需要更新HTML内容
+                document.getElementById("fasfdasfasdfsasdfsdfa").innerHTML =
+                    "<button onclick=\"AddPersonImage('add')\" style=\"margin-bottom:20px;\">添加照片</button><br>";
+                // 创建一个 contenteditable 的 div 元素
+                const contentEditableDiv = document.createElement("div");
+                contentEditableDiv.contentEditable = true;
+                for (const pictureurl of allpictureurl) {
+                    contentEditableDiv.innerHTML +=
+                        `<img src="${pictureurl}" alt="Person Image" onclick="AddPersonImage('delete', '${pictureurl}')" height="100px">`;
+                }
+                document.getElementById("fasfdasfasdfsasdfsdfa").appendChild(contentEditableDiv);
+            } catch (e) {
+                alert("发送图片到服务器失败！");
+            }
+        }
+        document.getElementById("listpp1").click();
+    </script>
+
+</body>
+
+</html>

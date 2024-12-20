@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bass.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/article.css">
+    <script>
+        function touchup(i) {
+            var arr = document.getElementById(i);
+            var brr = document.getElementById(i + 5);
+            arr.innerHTML = "<i> 已赞同 234</i>";
+            arr.style.backgroundColor = '#34ce34';
+            arr.style.color = '#fff';
+            brr.style.backgroundColor = '#e9ffe9';
+            brr.style.color = '#34ce34'
+        }
+        function touchdown(i) {
+            var arr = document.getElementById(i);
+            var brr = document.getElementById(i - 5);
+            arr.style.backgroundColor = '#34ce34';
+            arr.style.color = '#fff'
+            brr.innerHTML = "<i> 赞同 233</i>";
+            brr.style.backgroundColor = '#e9ffe9';
+            brr.style.color = '#34ce34';
+        }
+    </script>
+    <title>影视产品论坛</title>
+</head>
+
+<body>
+    <!--特效-->
+<!--    <script src="./js/背景特效.js"></script>-->
+    <span class="js-cursor-container"></span>
+<!--    <script src="./js/鼠标特效.js"></script>-->
+<!--    <script src="./js/鼠标声效.js"></script>-->
+    <!-- 获取必要的用户信息-->
+    <script src="./js/caozuojs/获取用户必要信息.js"></script>
+    <!-- 头部导航栏 -->
+    <header class="table-bordered" style=" background-color: #11789664;">
+        <div class="h container row ">
+            <a href="./index.html"><img src="./images/logo.png" alt="" width="80px" height="40px" class="col-sm-1 "></a>
+            <div class="container col-sm-9 ">
+                <ul class="headlist col-sm-4 row-no-gutters">
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list1" href="./finishlogin.html">首页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list2" href="./main.html">主页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list3" href="./editer.html">个人创作</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list4" href="./create.html">主题创作</a></li>
+                </ul>
+                <div class="col-sm-7 col-sm-offset-1 row-no-gutters">
+                    <input type="search" placeholder="想看什么文章呢？" class="col-sm-8" style="padding-left: 10px;" id="searchInput">
+                    <button type="button" class="btn btn-success col-sm-1" onclick="getSearchInputValue()" id="searchInputclick"><i></i></button>
+                    <button type="button" class="btn btn-success col-sm-2 col-sm-offset-1">提问</button>
+                </div>
+            </div>
+            <div class=" col-sm-2 login">
+                <a href="#" class="col-sm-3" title="信息"><i></i></a>
+                <a class="col-sm-6" id="wqerqwerqqrerqwerqwreqrq" src="./menduserdata.html">
+                    <img height='40px' src="" alt='用户头像' id="sdfadsfadfasdffds">
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- 处理查询的跳转-->
+    <script src="./js/caozuojs/处理导航连接.js"></script>
+
+    <!-- 文章主体 -->
+    <div class="index">
+        <div class="container main-table" style="width: 1000px;height: 760px; padding: 60px;">
+            <div class="jj mess">
+                <a href="#" style="font-size: 20px; color: black; text-decoration: none;">
+                    <img src="./images/uname.jpg" width="40px" height="40px"> 匿名用户
+                </a>
+                <p style="transform: translate(45px,-12px);">我只是名字叫这个.</p>
+                <div class=" personal-information">
+                    <div class="pitop">
+                        <img src="./images/uname.jpg" alt="" width="75px" height="75px">
+                        <div>匿名用户</div>
+                        <div class="cnmd">我只是名字叫这个.</div>
+                    </div>
+                    <div class="pibottom">
+                        <ul>
+                            <li>回答</li>
+                            <li style="left:50%">文章</li>
+                            <li style="left: 90%;"> 关注者</li>
+                        </ul>
+                        <ul class="shuju">
+                            <li>4321</li>
+                            <li style="left: 99px;"> 55 </li>
+                            <li style="left:183px;">15,001</li>
+                        </ul>
+                        <ul>
+                            <button
+                                style="top: 155px; left: 30px; background-color: #82c782; color: rgb(255, 255, 255);"><i>
+                                </i> 关注他</button>
+                            <button style="top: 155px; left: 250px;"><i></i> 发私信</button>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h5 style="color: #8690a6; transform:translateY(30px);">99人 赞同了此言论</h5>
+            <div class="a-content">
+                <p>更新出这个傻宝功能的14号晚间到15号，贴吧广告哥数量锐减。</p>
+                <p>一众广告发帖工具阵亡。</p>
+                <p>因为百度的迷之设定，导致客户端涉及到“傻宝”的帖子内容部分返回的内容格式大变</p>
+                <p>而目前几乎所有贴吧发帖机的客户端模式的核心代码都是同一套，是基于5年前的某早古版本的贴吧客户端。</p>
+                <p>然后只要帖子内容中，涉及这个傻宝图片的，会导致发帖工具直接崩溃。</p>
+                <p>而且这也让我们看到，程序员是有多不想碰祖传代码，</p>
+                <p>百度程序员压根没试图把“傻宝”变成非敏感词，而是打个补丁，加个额外检测，</p>
+                <p>检测到帖子因为“傻宝”这个敏感词被屏蔽，</p>
+                <p>网页端取消对楼层的折叠隐藏</p>
+                <p>客户端替换为傻宝图片。</p>
+                <h5 style="color: #8690a6; transform:translateY(30px);">编辑于15小时以前</h5>
+            </div>
+            <div class="function-as" style="transform: translateY(220%);">
+                <ul>
+                    <li><a href="#"><i> 46条评论</i></a></li>
+                    <li><a href="#"><i> 分享</i></a></li>
+                    <li><a href="#"><i> 收藏</i></a></li>
+                    <li><a href="#"><i> 喜欢</i></a></li>
+                    <li><a href="#"><i>...</i></a></li>
+                </ul>
+                <button type="button" onclick="touchdown(10)" id="10"><i></i></button>
+                <button type="button" onclick="touchup(5)" id="5"><i> 赞同 233</i></button>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

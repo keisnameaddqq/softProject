@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>影视产品论坛</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bass.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <style>
+        /* 在CSS文件中定义一个类选择器，给div添加一些样式 */
+        .article {
+            background-color: #f0f0f0; /* 设置div的背景色为浅灰色 */
+            border: 1px solid #ccc; /* 设置div的边框为1像素的实线，颜色为深灰色 */
+            font-family: Arial, sans-serif; /* 设置div的字体为Arial或者其他无衬线字体 */
+            padding: 10px; /* 设置div的内边距为10像素 */
+            text-align: justify; /* 设置div的文本对齐方式为两端对齐 */
+            margin: 10px auto; /* 设置垂直方向上的外边距为10像素，水平方向上的外边距自动居中 */
+            width: 60%; /* 设置宽度为60% */
+        }
+        /* 在CSS文件中定义一个id选择器，给h3添加一些样式 */
+        .article-title {
+            color: #333; /* 设置h3的字体颜色为深灰色 */
+            font-size: 18px; /* 设置h3的字体大小为18像素 */
+            font-weight: bold; /* 设置h3的字体粗细为粗体 */
+            margin-bottom: 5px; /* 设置h3的下边距为5像素 */
+        }
+        /* 在CSS文件中定义一个id选择器，给p添加一些样式 */
+        .article-content {
+            color: #666; /* 设置p的字体颜色为浅灰色 */
+            font-size: 14px; /* 设置p的字体大小为14像素 */
+            line-height: 1.5; /* 设置p的行高为1.5倍 */
+        }
+        .article-content-container {
+            max-height: 150px; /* 你希望设置的最大高度 */
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <!--特效-->
+<!--    <script src="./js/背景特效.js"></script>-->
+    <span class="js-cursor-container"></span>
+<!--    <script src="./js/鼠标特效.js"></script>-->
+<!--    <script src="./js/鼠标声效.js"></script>-->
+<!--     获取必要的用户信息和查询的信息-->
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const token = urlParams.get('token');
+        const userId = urlParams.get('userId');
+        const findcontent = urlParams.get('findcontent');
+        console.log("token="+token+" userId="+userId+" findcontent="+findcontent);
+        const userdata = "?userId=" + encodeURIComponent(userId) + "&token=" + encodeURIComponent(token);
+    </script>
+    <!-- 头部导航栏 -->
+    <header class="table-bordered" style=" background-color: #11789664;">
+        <div class="h container row ">
+            <a href="./index.html"><img src="./images/logo.png" alt="" width="80px" height="40px" class="col-sm-1 "></a>
+            <div class="container col-sm-9 ">
+                <ul class="headlist col-sm-4 row-no-gutters">
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list1" href="./finishlogin.html" style="font-weight: 700;">首页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list2" href="./main.html">主页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list3" href="./editer.html">个人创作</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list4" href="./create.html">主题创作</a></li>
+                </ul>
+                <div class="col-sm-7 col-sm-offset-1 row-no-gutters">
+                    <input type="search" placeholder="想看什么文章呢？" class="col-sm-8" style="padding-left: 10px;" id="searchInput">
+                    <button type="button" class="btn btn-success col-sm-1" onclick="getSearchInputValue()" id="searchInputclick"><i></i></button>
+                    <button type="button" class="btn btn-success col-sm-2 col-sm-offset-1">提问</button>
+                </div>
+            </div>
+            <div class=" col-sm-2 login">
+                <a href="#" class="col-sm-3" title="信息"><i></i></a>
+                <a class="col-sm-6" id="wqerqwerqqrerqwerqwreqrq" src="./menduserdata.html">
+                    <img height='40px' src="" alt='用户头像' id="sdfadsfadfasdffds">
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- 处理查询的跳转-->
+    <script src="./js/caozuojs/处理导航连接.js"></script>
+
+
+    <div class="index">
+        <div class="container setable">
+            <div class="main-table col-sm-8 container" id="articleContainer" style="margin-left: 130px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- 搜索结果-->
+    <div id="" class="index"></div>
+
+    <script src="js/caozuojs/文章缩略版装饰和点赞和收藏.js"></script>
+
+    <!-- 沟通服务器，进行查询，并显示结果-->
+    <script>
+        window.onload = async function() {
+            const formData = new FormData(); // 创建一个 FormData 对象
+            formData.append('findcontent', findcontent);
+            formData.append('userId', userId);
+            formData.append('token',token);
+            try {
+                const response = await fetch("./findarticle", { // 使用 Fetch API 将文件上传到服务器
+                    method: 'POST',
+                    body: formData,
+                });
+                const articles = await response.json();
+                console.log("articles = "+articles);
+                const articleContainer = document.getElementById('articleContainer');
+                articleContainer.innerHTML = ''; // 清除先前的内容
+                // 处理文章列表
+                for (let article of articles) {
+                    console.log("articleid="+article[0]);//文章id
+                    console.log("authorid="+article[1]);// 文章作者id
+                    console.log("title="+article[2]); // 打印文章标题
+                    console.log("content="+article[3]); // 打印文章内容
+                    console.log("dianzang="+article[4]);// 赞的数量
+                    console.log("pinglun="+article[5]);// 评论的数量
+                    console.log("isdianzhang="+article[6]);// 是否点赞了
+                    console.log("timestampinminutes="+article[7]);// 分钟级别的时间戳
+                    console.log("isShouCang="+article[8]);// 是否收藏
+                    console.log("authorSignature="+article[9]);// 作者的昵称
+                    console.log("authorSignature="+article[10]);// 作者的个性签名
+                    //articleId, authorId, title, content, remarkNumber, isDianZhang, agreeNumber, userdata, isShouCang, authorNickName,authorSignature
+                    await articleContainer.appendChild(await createArticleDiv(article[0], article[1], article[2], article[3],
+                        article[5], article[6], article[4], userdata,article[8],article[9],article[10]));
+                    touchup(article[0],"初始");
+                    IWantShouCang(article[0],"初始");
+                }
+            } catch (error) {
+                alert('查询出错:', error);
+                console.log("查询出错:"+error);
+            }
+        }
+    </script>
+
+
+
+
+</body>
+</html>

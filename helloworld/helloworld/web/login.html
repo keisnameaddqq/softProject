@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <title>影视产品论坛</title>
+</head>
+
+<body>
+   <!--特效-->
+<!--  <script src="./js/背景特效.js"></script>-->
+  <span class="js-cursor-container"></span>
+<!--  <script src="./js/鼠标特效.js"></script>-->
+<!--  <script src="./js/鼠标声效.js"></script>-->
+
+  <div class="container">
+    <h1>请登入</h1>
+    <form onsubmit="return EndHandleLogin(this)" autocomplete="off">
+      <div class="form-control">
+        <input type="text" required id="email" autocomplete="off">
+        <label for="email">用户名</label>
+      </div>
+      <div class="form-control">
+        <input type="password" required id="password" autocomplete="off">
+        <label for="password">密码</label>
+      </div>
+      <button class="btn" type="submit" id="fasdoiouihgldkfgd">登录</button>
+      <br>
+      <input type="radio" name="RadioButtonGroup" value="记住账号" id="RadioButtonGroup_0" />记住账号
+      <input type="radio" name="RadioButtonGroup" value="保持登录" id="RadioButtonGroup_1" checked/>保持登录
+      <input type="radio" name="RadioButtonGroup" value="忘记密码" id="RadioButtonGroup_2" />不保存
+      <p class="text">还没有一个账户？
+        <a href="register.html">注册</a>
+        <a href="ForgetPassword.html" style="margin-right: 4px;">忘记密码</a>
+        <a class="back" href="./index.html">游客登录</a>
+      </p>
+    </form>
+  </div>
+
+  <script>
+    // 处理保持登录
+    window.onload = async function () {
+      // 从本地数据库获取yaozhan的值
+      const rememberOption = localStorage.getItem('yaozhan');
+      // 获取输入框元素
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password')
+      // 根据yaozhan的值执行相应逻辑
+      if (rememberOption != null) {
+        console.log("rememberOption=" + rememberOption);
+        if (rememberOption === '0') {
+          emailInput.value = '';
+          passwordInput.value = '';
+        } else if (rememberOption === '1') {
+          emailInput.value = localStorage.getItem('yaozhanuserName');
+          passwordInput.value = '';
+        } else if (rememberOption === '2') {
+          emailInput.value = '';
+          passwordInput.value = '';
+          const token = localStorage.getItem('yaozhantoken');
+          console.log("token=" + token);
+          var result = window.confirm("是否确定直接原账号登录？");
+          if (result) {
+            return await handleLogin("", "", "token", token);
+          }
+        }
+      }
+    }
+    //集成调用登录模块的接口方法
+    async function EndHandleLogin(form) {
+      event.preventDefault();
+      console.log("userName=" + form.elements["email"].value +
+              "\npassword=" + form.elements["password"].value);
+      if (validateUsername(form.elements["email"].value) === false) {
+        return false;
+      }
+      if (validatePassword(form.elements["password"].value) === false) {
+        return false;
+      }
+      // 等待handleLogin的Promise
+      return await handleLogin(form.elements["email"].value,hashCode(form.elements["password"].value),"password","");
+    }
+    //发送登录数据
+    async function handleLogin(userNme,password,loginThought,token) {
+      const url = "./login";
+      try {
+        let response;
+        if(loginThought==="password"){
+          response = await fetch(url, {
+            method: "post",
+            body: new URLSearchParams({
+              "loginThought":loginThought,
+              "userName": userNme,
+              "password": password
+            })
+          });
+        } else if(loginThought==="token"){
+          response = await fetch(url, {
+            method: "post",
+            body: new URLSearchParams({
+              "loginThought":loginThought,
+              "token": token
+            })
+          });
+        }
+        const message = await response.json();
+        console.log("登录结果："+message);
+        //{"false",falseReason};{"true",userId,token};
+        if (message[0]==="true") {
+          alert("登录成功!");
+          //如何在这里插入获取：记住账号、保持登录、忘记密码的值
+          //当忘记密码被选择时，将 “yaozhan” 作为关键字，和 “0” 保存到浏览器的数据库中
+          //当记住账号被选择时，将 “yaozhan” 作为关键字，和  “1” 和 form.elements["email"].value保存到浏览器的数据库中
+          //当保持登录被选择时，将 “yaozhan” 作为关键字，和 “2” 和 token 保存到浏览器的数据库中
+          const rememberAccount = document.querySelector('input[name="RadioButtonGroup"]:checked').value;
+          if (rememberAccount === '记住账号') {
+            // 保存到浏览器的数据库中，使用localStorage或其他适当的存储方式
+            localStorage.setItem('yaozhan', '1');
+            localStorage.setItem('yaozhanuserName', document.getElementById("email").value);
+            localStorage.setItem('yaozhantoken', "");
+          } else if (rememberAccount === '保持登录') {
+            // 保存到浏览器的数据库中
+            localStorage.setItem('yaozhan', '2');
+            localStorage.setItem('yaozhanuserName', "");
+            localStorage.setItem('yaozhantoken', message[2]);
+          } else if (rememberAccount === '忘记密码') {
+            // 保存到浏览器的数据库中
+            localStorage.setItem('yaozhanyaozhan', '0');
+            localStorage.setItem('yaozhanuserName', "");
+            localStorage.setItem('yaozhantoken', "");
+          }
+          window.location.href = "finishlogin.html?userId="+encodeURIComponent(message[1])
+                  +"&token=" + encodeURIComponent(message[2]);
+          // 跳转到新的页面
+          return true;
+        } else {
+          alert(message[1]);
+          return false;
+        }
+      } catch (error) {
+        alert(error+"\n");
+        throw error;
+      }
+    }
+  </script>
+  <script src="./js/caozuojs/用户名和密码和电话和哈希格式.js"></script>
+  <script>
+    //特殊样式的实现
+    const labels = document.querySelectorAll('.form-control label')
+    labels.forEach(label => {
+      label.innerHTML = label.innerText
+              .split('')
+              .map((letter, idx) => `<span style="transition-delay:${idx * 50}ms">${letter}</span>`)//letter:当前元素的值 idx:当前元素的索引值 transition-delay:何时进行切换
+              .join('')
+    })
+  </script>
+</body>
+
+</html>

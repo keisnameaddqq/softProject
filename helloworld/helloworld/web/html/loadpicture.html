@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传和拖拽排序</title>
+    <style>
+        #uploadContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .css-n71hcb {
+            /* 保持原样式不变 */
+            box-sizing: border-box;
+            min-width: 0px;
+            line-height: 32px;
+            font-size: 12px;
+            color: rgb(132, 145, 165);
+            align-items: center;
+            justify-content: center;
+            display: inline-flex;
+            cursor: pointer;
+            border-radius: 8px;
+            width: 104px;
+            height: 104px;
+            border: 1px dashed rgb(211, 211, 211);
+            margin: 0;
+            background: transparent;
+        }
+        .css-19qt7kz {
+            /* 保持原样式不变 */
+            box-sizing: border-box;
+            margin: 10px 0 0;
+            min-width: 0;
+            color: rgb(25, 27, 31);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .css-1p4jqd8 {
+            /* 保持原样式不变 */
+            box-sizing: border-box;
+            margin: 4px 0 0;
+            min-width: 0;
+            color: rgb(145, 150, 161);
+            font-size: 12px;
+        }
+        #imageContainer {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .draggable-image {
+            cursor: grab;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="uploadContainer">
+        <div role="button" class="css-n71hcb" id="uploadButton">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C11.4477 0 11 0.447716 11 1V11H1C0.447715 11 0 11.4477 0 12C0 12.5523 0.447716 13 1 13H11V23C11 23.5523 11.4477 24 12 24C12.5523 24 13 23.5523 13 23V13H23C23.5523 13 24 12.5523 24 12C24 11.4477 23.5523 11 23 11H13V1C13 0.447715 12.5523 0 12 0Z" fill="#999999"></path>
+            </svg>
+        </div>
+        <div class="css-19qt7kz">上传图片</div>
+        <div class="css-1p4jqd8">支持 JPG、JPEG、PNG 等格式</div>
+    </div>
+
+    <!-- 隐藏的文件上传输入框 -->
+    <input type="file" id="fileInput" accept="image/*" style="display: none" multiple>
+    <div id="imageContainer"></div>
+    <!-- 图片上传和拖拽事件的脚本 -->
+    <script>
+        document.getElementById('uploadButton').addEventListener('click', function () {
+            document.getElementById('fileInput').click(); // 触发文件选择
+        });
+        document.getElementById('fileInput').addEventListener('change', async function () {
+            const files = this.files; // 获取选定的文件列表
+            if (files.length > 0) {
+                const imageContainer = document.getElementById('imageContainer');
+                for (let i = 0; i < files.length; i++) {
+                    var url = await getPictureUrl(files[i], './loadpicture');
+                    if (url != null) {
+                        const imageElement = document.createElement('img');
+                        imageElement.src = url;
+                        imageElement.classList.add('draggable-image');
+                        imageElement.style.width = '250px'; // 设置图片宽度
+                        imageElement.style.height = '250px'; // 设置图片高度
+                        imageContainer.appendChild(imageElement); // 将图片元素添加到页面中的指定容器
+                    }
+                }
+            }
+        });
+        async function getPictureUrl(pictureFile, address) {
+            const formData = new FormData(); // 创建一个 FormData 对象
+            formData.append('picture', pictureFile);
+            try {
+                const response = await fetch(address, { // 使用 Fetch API 将文件上传到服务器
+                    method: 'POST',
+                    body: formData
+                });
+                const url = await response.text();
+                // 返回是的一串数字
+                const isNumericString = /^[\d]+$/;
+                if (isNumericString.test(url)) {
+                    console.log("获取到了" + url);
+                    return './picture/' + url + '.png';
+                } else {
+                    console.log("不是一串数字字符");
+                    alert("获取上传图片获取url失败");
+                    return null;
+                }
+            } catch (error) {
+                alert('上传图片出错:', error);
+            }
+        }
+        // 图片拖拽事件的监听
+        const imageContainer = document.getElementById('imageContainer');
+        let draggedElement = null;
+        imageContainer.addEventListener('dragstart', (e) => {
+            if (e.target.tagName === 'IMG') {
+                draggedElement = e.target;
+                e.dataTransfer.setData('text/plain', '');
+            }
+        });
+        imageContainer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        imageContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (draggedElement) {
+                const target = e.target;
+                if (target.tagName === 'IMG') {
+                    // 交换拖拽的图片和目标图片的顺序
+                    const draggedIndex = Array.from(imageContainer.children).indexOf(draggedElement);
+                    const targetIndex = Array.from(imageContainer.children).indexOf(target);
+                    if (draggedIndex !== -1 && targetIndex !== -1) {
+                        const images = Array.from(imageContainer.children);
+                        [images[draggedIndex], images[targetIndex]] = [images[targetIndex], images[draggedIndex]];
+                        imageContainer.innerHTML = ''; // 清空容器
+                        images.forEach((img) => imageContainer.appendChild(img)); // 按新顺序重新添加
+                    }
+                }
+                draggedElement = null;
+            }
+        });
+    </script>
+
+</body>
+</html>

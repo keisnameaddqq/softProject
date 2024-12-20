@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>石头剪刀布小游戏</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bass.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/article.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        body {
+            background-image: url('./images/game_background.jpg');
+            background-size: cover; /* 背景图片将被拉伸或压缩以适应整个屏幕 */
+            background-position: center; /* 背景图片居中显示 */
+            background-repeat: no-repeat; /* 防止背景图片重复 */
+            height: 100%; /* 确保 html 和 body 元素占满整个视口的高度 */
+            margin: 0; /* 移除默认的边距 */
+            padding: 0; /* 移除默认的内边距 */
+        }
+        #mygamecontainer {
+            max-width: 500px; /* 设置最大宽度，使内容不过分宽 */
+            margin-top: 20px; /* 添加一些外边距 */
+            height: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mygame {
+            width: 100%;
+            text-align: center; /* 文本居中 */
+            margin: auto;
+            margin-top: 150px;
+            background-color: rgba(255, 255, 255, 0.8); /* 添加半透明背景色 */
+            border-radius: 10px; /* 圆角边框 */
+            padding: 20px; /* 内边距，使内容不靠近边缘 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+        }
+
+        .mygame h3 {
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        .mygame button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            color: #fff;
+            background-color: #007BFF;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .mygame button:hover {
+            background-color: #0056b3;
+        }
+
+        .mygame span {
+            font-size: 20px;
+            color: #007BFF;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!--特效-->
+<!--    <script src="./js/背景特效.js"></script>-->
+    <span class="js-cursor-container"></span>
+<!--    <script src="./js/鼠标特效.js"></script>-->
+<!--    <script src="./js/鼠标声效.js"></script>-->
+    <!-- 获取必要的用户信息-->
+    <script src="./js/caozuojs/获取用户必要信息.js"></script>
+    <!-- 头部导航栏 -->
+    <header class="table-bordered" style=" background-color: #11789664;">
+        <div class="h container row ">
+            <a href="./index.html"><img src="./images/logo.png" alt="" width="80px" height="40px" class="col-sm-1 "></a>
+            <div class="container col-sm-9 ">
+                <ul class="headlist col-sm-4 row-no-gutters">
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list1" href="./finishlogin.html">首页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list2" href="./main.html">主页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list3" href="./editer.html">个人创作</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list4" href="./create.html">主题创作</a></li>
+                </ul>
+                <div class="col-sm-7 col-sm-offset-1 row-no-gutters">
+                    <input type="search" placeholder="想看什么文章呢？" class="col-sm-8" style="padding-left: 10px;" id="searchInput">
+                    <button type="button" class="btn btn-success col-sm-1" onclick="getSearchInputValue()" id="searchInputclick"><i></i></button>
+                    <button type="button" class="btn btn-success col-sm-2 col-sm-offset-1">提问</button>
+                </div>
+            </div>
+            <div class=" col-sm-2 login">
+                <a href="#" class="col-sm-3" title="信息"><i></i></a>
+                <a class="col-sm-6" id="wqerqwerqqrerqwerqwreqrq" src="./menduserdata.html">
+                    <img height='40px' src="" alt='用户头像' id="sdfadsfadfasdffds">
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- 处理查询的跳转-->
+    <script src="./js/caozuojs/处理导航连接.js"></script>
+
+    <div id="mygamecontainer">
+        <div class="mygame">
+            <h3>石头剪刀布小游戏</h3>
+            <button id="shitou" onclick="HandleGame('shitou')">石头</button>
+            <button id="jiandao" onclick="HandleGame('jiandao')">剪刀</button>
+            <button id="bu" onclick="HandleGame('bu')">布</button>
+            <div>
+                <span>系统出拳:</span>
+                <span id="jieguo"></span>
+            </div>
+            <div>
+                <span>你当前的胜率：</span>
+                <span id="shengLv">100</span><span>%</span>
+                <span id="duiJuNumber" style="display: none">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function HandleGame(clickedButtonId) {
+            let zhi = -1; //0剪刀、1石头、2布：三个按钮
+            switch (clickedButtonId) { // 根据按钮的ID执行相应的逻辑
+                case 'shitou':
+                    zhi = 1;
+                    console.log('石头按钮被点击');
+                    break;
+                case 'jiandao':
+                    zhi = 0;
+                    console.log('剪刀按钮被点击');
+                    break;
+                case 'bu':
+                    zhi = 2;
+                    console.log('布按钮被点击');
+                    break;
+                default:
+                    console.log('未知按钮被点击');
+                    return;
+            }
+            const url = "./game";
+            try {
+                const response = await fetch(url, {
+                    method: "post",
+                    body: new URLSearchParams({ 'zhi': zhi }) // 使用URLSearchParams创建包含zhi变量的对象
+                });
+                const message = await response.text();
+                console.log("message="+message);
+                var jieguo = parseInt(message);
+                if (jieguo == 0) {
+                    document.getElementById("jieguo").innerHTML = "剪刀";
+                } else if (jieguo == 1) {
+                    document.getElementById("jieguo").innerHTML = "石头";
+                } else if (jieguo == 2) {
+                    document.getElementById("jieguo").innerHTML = "布";
+                }
+                let shengL=document.getElementById("shengLv").innerText;
+                let junum=document.getElementById("duiJuNumber").innerText;
+                let pp;
+                if (jieguo == zhi) {
+                    pp=(+junum*shengL+50)/(+junum+1);
+                    alert("平局！");
+                } else if ((jieguo + 2) % 3 == zhi) {
+                    pp=(+junum*shengL)/(+junum+1);
+                    alert("你输了！");
+                } else if ((jieguo + 1) % 3 == zhi) {
+                    pp=(+junum*shengL+100)/(+junum+1);
+                    alert("你赢了！");
+                }
+                document.getElementById("shengLv").innerText=pp;
+                document.getElementById("duiJuNumber").innerText=+junum+1;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

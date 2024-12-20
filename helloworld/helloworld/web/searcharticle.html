@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bass.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/article.css">
+    <title>影视产品论坛</title>
+    <style>
+        /* 在CSS文件中定义一个类选择器，给div添加一些样式 */
+        .article {
+            background-color: #f0f0f0; /* 设置div的背景色为浅灰色 */
+            border: 1px solid #ccc; /* 设置div的边框为1像素的实线，颜色为深灰色 */
+            font-family: Arial, sans-serif; /* 设置div的字体为Arial或者其他无衬线字体 */
+            padding: 10px; /* 设置div的内边距为10像素 */
+            text-align: justify; /* 设置div的文本对齐方式为两端对齐 */
+            margin: 10px auto; /* 设置垂直方向上的外边距为10像素，水平方向上的外边距自动居中 */
+            width: 60%; /* 设置宽度为60% */
+        }
+        /* 在CSS文件中定义一个id选择器，给h3添加一些样式 */
+        .article-title {
+            color: #333; /* 设置h3的字体颜色为深灰色 */
+            font-size: 18px; /* 设置h3的字体大小为18像素 */
+            font-weight: bold; /* 设置h3的字体粗细为粗体 */
+            margin-bottom: 50px; /* 设置h3的下边距为5像素 */
+            margin-top: 10px;
+            text-align: center;
+        }
+        /* 在CSS文件中定义一个id选择器，给p添加一些样式 */
+        .article-content {
+            color: #666; /* 设置p的字体颜色为浅灰色 */
+            font-size: 14px; /* 设置p的字体大小为14像素 */
+            line-height: 1.5; /* 设置p的行高为1.5倍 */
+        }
+        .contain-body{
+            height: auto;
+            background-color: #fff;
+            box-shadow: 0 0px 3px rgb(136, 136, 136);
+        }
+        .my-content{
+            margin-top: 60px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!--特效-->
+<!--    <script src="./js/背景特效.js"></script>-->
+    <span class="js-cursor-container"></span>
+<!--    <script src="./js/鼠标特效.js"></script>-->
+<!--    <script src="./js/鼠标声效.js"></script>-->
+
+    <!-- 获取必要的用户信息和查询信息-->
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const token = urlParams.get('token');
+        const userId = urlParams.get('userId');
+        const articleId = urlParams.get('articleId');
+        const authorId = urlParams.get('authorId');
+        console.log("token="+token +" userId="+userId+" articleId="+articleId+" authorId="+authorId);
+        const userdata = "?userId=" + encodeURIComponent(userId) + "&token=" + encodeURIComponent(token);
+    </script>
+    <!-- 头部导航栏 -->
+    <header class="table-bordered" style=" background-color: #11789664;">
+        <div class="h container row ">
+            <a href="./index.html"><img src="./images/logo.png" alt="" width="80px" height="40px" class="col-sm-1 "></a>
+            <div class="container col-sm-9 ">
+                <ul class="headlist col-sm-4 row-no-gutters">
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list1" href="./finishlogin.html" style="font-weight: 700;">首页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list2" href="./main.html">主页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list3" href="./editer.html">个人创作</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list4" href="./create.html">主题创作</a></li>
+                </ul>
+                <div class="col-sm-7 col-sm-offset-1 row-no-gutters">
+                    <input type="search" placeholder="想看什么文章呢？" class="col-sm-8" style="padding-left: 10px;" id="searchInput">
+                    <button type="button" class="btn btn-success col-sm-1" onclick="getSearchInputValue()" id="searchInputclick"><i></i></button>
+                    <button type="button" class="btn btn-success col-sm-2 col-sm-offset-1">提问</button>
+                </div>
+            </div>
+            <div class=" col-sm-2 login">
+                <a href="#" class="col-sm-3" title="信息"><i></i></a>
+                <a class="col-sm-6" id="wqerqwerqqrerqwerqwreqrq" src="./menduserdata.html">
+                    <img height='40px' src="" alt='用户头像' id="sdfadsfadfasdffds">
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- 处理查询的跳转-->
+    <script src="./js/caozuojs/处理导航连接.js"></script>
+    <script src="./js/caozuojs/评论信息的修饰.js"></script>
+
+
+    <!-- 文章和评论区页面设计-->
+    <div class="index">
+        <!-- 文章主体 -->
+        <div class="container contain-body" style="width: 1000px; padding: 20px 20px 15px 20px;margin-top: 20px;">
+            <div class="jj mess">
+                <a href="#" style="font-size: 20px; color: black; text-decoration: none;">
+                    <img src="" width="40px" height="40px" id="authorTouXiang" onclick="IWantGuanZhu()"> <div id="authorName" style="display:inline"></div>
+                </a>
+                <p style="transform: translate(45px,-12px);" id="authorSignature"></p>
+                <div class=" personal-information">
+                    <div class="pitop">
+                        <img src="" alt="" width="75px" height="75px" id="authorTouXiang1"> <div id="authorName1"></div>
+                        <div class="cnmd" id="authorSignature1"></div>
+                    </div>
+                    <div class="pibottom">
+                        <ul>
+                            <li style="left:80px">文章</li>
+                            <li style="left:160px;">关注者</li>
+                        </ul>
+                        <ul class="shuju">
+                            <li style="left:80px;" id="shujuNumberOfArticle">55</li>
+                            <li style="left:185px;" id="shujuNumberOfFan">15</li>
+                        </ul>
+                        <ul>
+                            <button style="top: 155px; left: 30px; background-color: #82c782;">
+                                <i style="color: rgb(255, 255, 255);" id="CanGuanZhuHe"> 关注他</i>
+                                <i style="color: blue;" id="FinishGuanZhuHe"> 已关注</i>
+                            </button>
+                            <button style="top: 155px; left: 250px;">
+                                <i></i> 发私信
+                            </button>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h5 style="color: #8690a6; margin-top: 10px;" id="articleDianZang">99人 赞同了此言论</h5>
+            <!-- 文章show区域-->
+            <div class="my-content" id="now-article">
+            </div>
+        </div>
+        <!-- 评论区-->
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; height: auto;">
+            <!-- 评论输入区 -->
+            <div style="display: flex; align-items: center; width: 90%; margin: 50px 0px 20px 70px; ">
+                <!-- 用户头像 -->
+                <img style="box-sizing: border-box; margin: 0px 20px 0px 40px; min-width: 0px; max-width: 100%; background-color: rgb(255, 255, 255); width: 40px; height: 40px; border-radius: 3px; flex: 0 0 auto;"
+                        id="remarkUserTouXiang" src="images/ad.jpg">
+                <!-- 评论输入框 -->
+                <textarea style="width: 80%; margin: 0px 20px 0px 20px;resize: none;height: 50px;" placeholder="在这里输入评论..." ;
+                          id="remarktextarea"></textarea>
+                <button onclick="SendRemark()">评论</button>
+            </div>
+            <!-- 评论展示区 -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 80%; margin-bottom: 20px; border: 2px solid #000; padding: 10px;">
+                <!-- 评论条数 -->
+                <div id="remarkNumberShow" style="margin: 0px 50px 0px 50px;border-bottom: 3px solid #766d6d7e;width: 100%;">15条评论</div>
+                <div id="remarkContainer" style="width: 100%;">暂无评论</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 评论删除和置顶-->
+    <script>
+        function remarkZhiDing(remarkid) {
+            console.log("remarkZhiDing=" + remarkid);
+            let childNeedZhiDing = document.getElementById(remarkid + "remark");
+            let parent = document.getElementById("remarkContainer");
+            // 将childNeedZhiDing移到最顶部
+            parent.insertBefore(childNeedZhiDing, parent.firstChild);
+        }
+
+        function remarkDelete(remarkid) {
+            console.log("remarkDelete=" + remarkid);
+            let childNeedDelete = document.getElementById(remarkid + "remark");
+            let parent = document.getElementById("remarkContainer");
+            // 从parent中移除childNeedDelete
+            parent.removeChild(childNeedDelete);
+        }
+    </script>
+
+    <!-- 获取该文章的所有的评论-->
+    <script>
+        async function SetAllRemark(PinglunNumber) {
+            if (PinglunNumber == 0) {
+                document.getElementById("remarkContainer").innerHTML = "暂无评论";
+            } else {
+                document.getElementById("remarkContainer").innerHTML ="";
+                const formData = new FormData(); // 创建一个 FormData 对象
+                formData.append('articleId', articleId);
+                formData.append('userId', userId);
+                formData.append('token', token);
+                console.log("formData=" + formData);
+                try {
+                    const response = await fetch("./GetAllRemarkByArticleId", { // 使用 Fetch API 将文件上传到服务器
+                        method: 'POST',
+                        body: formData,
+                    });
+                    const commentDatas = await response.json();
+                    console.log("commentDatas = " + commentDatas);
+                    //pinglunid 0 和 pinglunauthorid 1 和 pingluncontent 2 和 pinglunauthorname 3
+                    for(let comment of commentDatas){
+                        //remarkid, pinglunuserid, pinglunuserName, pingluncontent
+                        document.getElementById("remarkContainer").appendChild(
+                            createRemark(comment[0],comment[1],comment[3],comment[2]));
+                    }
+                } catch (e) {
+                    alert('文章评论获取出错:', error);
+                    console.log("文章评论获取出错:" + error);
+                }
+            }
+        }
+    </script>
+
+    <!-- 发送评论-->
+    <script>
+        async function SendRemark() {
+            // 获取textarea的值
+            let remarkContent = document.getElementById("remarktextarea").value;
+            // 在这里可以使用 remarkContent 进行处理，比如发送到服务器等操作
+            console.log("评论内容：" + remarkContent);
+            const formData = new FormData(); // 创建一个 FormData 对象
+            formData.append('articleId', articleId);
+            formData.append('remarkContent', remarkContent);
+            formData.append('userId', userId);
+            formData.append('token', token);
+            console.log("formData=" + formData);
+            try {
+                const response = await fetch("./createRemark", { // 使用 Fetch API 将文件上传到服务器
+                    method: 'POST',
+                    body: formData,
+                });
+                const remarkResult = await response.text();
+                if(remarkResult==="true"){
+                    alert("发表评论成功！");
+                    console.log("发表评论成功！");
+                } else if(remarkResult==="你的评论中包含’敏感词‘"){
+                    alert("你的评论中包含’敏感词‘！请注意！");
+                    console.log("你的评论中包含’敏感词‘！请注意！");
+                } else {
+                    alert("发表评论失败！请检测网络或用户登录情况！");
+                    console.log("发表评论失败！请检测网络或用户登录情况！");
+                }
+            } catch (e) {
+                alert('发送评论出错:', error);
+                console.log("发送评论出错:"+error);
+            }
+        }
+    </script>
+
+    <!-- 删除文章-->
+    <script>
+        async function DeleteArticle() {
+            if(window.confirm("你确定要删除这篇文章吗？")){
+                console.log("DeleteArticle=" + articleId);
+                //沟通服务器删除文章
+                const formData = new FormData(); // 创建一个 FormData 对象
+                formData.append('articleId', articleId);
+                formData.append("need", "DeleteArticle");
+                formData.append('authorId', authorId);
+                formData.append('userId', userId);
+                formData.append('token', token);
+                try {
+                    const response = await fetch("./SmallNeed", { // 使用 Fetch API 将文件上传到服务器
+                        method: 'POST',
+                        body: formData,
+                    });
+                    const deleteArticleResult = await response.text();
+                    console.log("deleteArticleResult = " + deleteArticleResult);
+                    if (deleteArticleResult == "true") {
+                        alert("文章删除成功！")
+                        console.log("文章删除成功！");
+                        window.history.back();
+                    } else {
+                        console.log("删除文章失败！");
+                        return;
+                    }
+                } catch (e) {
+                    console.log("删除文章失败！");
+                }
+            }
+        }
+    </script>
+
+    <!-- 沟通服务器，查询文章信息-->
+    <script>
+        window.onload = async function() {
+            document.getElementById("authorTouXiang").setAttribute("src","./userTouXiang/"+authorId+".png");
+            document.getElementById("authorTouXiang1").setAttribute("src","./userTouXiang/"+authorId+".png");
+            document.getElementById("remarkUserTouXiang").setAttribute("src","./userTouXiang/"+userId+".png");
+            const formData = new FormData(); // 创建一个 FormData 对象
+            formData.append('articleId', articleId);
+            formData.append('authorId',authorId);
+            formData.append('userId', userId);
+            formData.append('token',token);
+            console.log("formData="+formData);
+            try {
+                const response = await fetch("./showarticle", { // 使用 Fetch API 将文件上传到服务器
+                    method: 'POST',
+                    body: formData,
+                });
+                const articleData = await response.json();console.log("articleData = "+articleData);
+                // 访问 articleData 数组中的信息
+                const title = articleData[1];
+                const content = articleData[2];
+                const dianzang = articleData[3];
+                const authorName = articleData[4];
+                const authorSignature = articleData[5];
+                const pinglun = articleData[6];
+                const timestampinminutes = articleData[7];
+                const isGuanZhu=articleData[8];//CanGuanZhuHe FinishGuanZhuHe
+                const NumberOfArticle=articleData[9];//shujuNumberOfArticle
+                const NumberOfFan=articleData[10];//shujuNumberOfFan
+                console.log("ArticleID: " + articleId);console.log("Title: " + title);console.log("Content: " + content);
+                console.log("Dianzang: " + dianzang);console.log("AuthorName: " + authorName);console.log("AuthorSignature: " + authorSignature);
+                console.log("pinglun: " + pinglun);console.log("timestampinminutes: " + timestampinminutes);console.log("isGuanZhu: " + isGuanZhu);
+                console.log("NumberOfArticle: " + NumberOfArticle);console.log("NumberOfFan: " + NumberOfFan);
+                //设置文章内容
+                document.getElementById("authorName").innerHTML=document.getElementById("authorName1").innerHTML=authorName;
+                document.getElementById("authorSignature").innerHTML=document.getElementById("authorSignature1").innerHTML=authorSignature;
+                document.getElementById("articleDianZang").innerHTML=dianzang+"人 赞同了此言论";
+                document.getElementById("now-article").innerHTML=`<h2 class="article-title">${title}</h2>`+
+                    `<div class="article-content-container"><p class="article-content">${content}</p></div>`;
+                let timeshow=formatTimestampInMinutes(timestampinminutes);
+                document.getElementById("now-article").innerHTML+=`<h5 style=\"color: #8690a6; margin-top: 100px;\">编辑于 ${timeshow}</h5>`;
+                //设置删除和编辑文章的按钮的显示
+                if(userId==authorId){
+                    document.getElementById("now-article").innerHTML+=
+                        `<button style="float: right;"><a href="./ReEditer.html${userdata}&articleId=${articleId}">再次编辑</a></button>`+
+                        `<button onclick="DeleteArticle()" style="float: right;">删除</button>`;
+                }
+                //设置文章作者的相关信息
+                document.getElementById("shujuNumberOfArticle").innerText=NumberOfArticle;
+                document.getElementById("shujuNumberOfFan").innerText=NumberOfFan;
+                if(isGuanZhu==0){
+                    document.getElementById("CanGuanZhuHe").style.display="";document.getElementById("FinishGuanZhuHe").style.display="none";
+                } else if(isGuanZhu==1) {
+                    document.getElementById("CanGuanZhuHe").style.display="none";document.getElementById("FinishGuanZhuHe").style.display="";
+                }
+                //设置评论区
+                document.getElementById("remarkNumberShow").innerText=pinglun+"条评论";
+                await SetAllRemark(pinglun);
+            } catch (error) {
+                alert('文章获取内容出错:', error);
+                console.log("文章获取内容出错:"+error);
+            }
+        }
+        //分钟级别的时间戳的转换
+        function formatTimestampInMinutes(timestampInMinutes) {
+            // 将分钟时间戳转换为毫秒
+            let timestampInMilliseconds = timestampInMinutes * 60 * 1000;
+            // 创建 Date 对象
+            let date = new Date(timestampInMilliseconds);
+            // 获取年、月、日、小时和分钟
+            let year = date.getFullYear();
+            let month = ('0' + (date.getMonth() + 1)).slice(-2); // 注意月份是从 0 开始的，所以要加 1
+            let day = ('0' + date.getDate()).slice(-2);
+            let hours = ('0' + date.getHours()).slice(-2);
+            let minutes = ('0' + date.getMinutes()).slice(-2);
+            // 构建格式化的时间字符串
+            let formattedTimestamp = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+            return formattedTimestamp;
+        }
+    </script>
+
+    <!-- 关注的实现-->
+    <script>
+        async function IWantGuanZhu() {
+            if(authorId!==userId&&document.getElementById("FinishGuanZhuHe").style.display==="none"){
+                let userResponse = window.confirm("你确定要执行这个关注up主吗？");
+                if (userResponse) {
+                    console.log("用户确定要关注up主");
+                    // 处理数据的发送
+                    const formData = new FormData(); // 创建一个 FormData 对象
+                    formData.append('authorId', authorId);
+                    formData.append("need", "GuanZhu");
+                    formData.append('userId', userId);
+                    formData.append('token', token);
+                    try {
+                        const response = await fetch("./SmallNeed", { // 使用 Fetch API 将文件上传到服务器
+                            method: 'POST',
+                            body: formData,
+                        });
+                        const GuanZhuResult = await response.text();
+                        console.log("GuanZhuResult = " + GuanZhuResult);
+                        if (GuanZhuResult == "true") {
+                            document.getElementById("CanGuanZhuHe").style.display = "none";
+                            document.getElementById("FinishGuanZhuHe").style.display = "";
+                        } else {
+                            alert("关注失败！");
+                            console.log("关注失败！");
+                        }
+                    } catch (e) {
+                        alert("关注失败！");
+                        console.log("关注失败！");
+                    }
+                } else {
+                    console.log("用户不想关注up主");
+                }
+            } else if(authorId!==userId&&document.getElementById("FinishGuanZhuHe").style.display!=="none"){
+                window.location.href = "./VisitUserHome.html?realUserId=" + encodeURIComponent(userId)
+                    +"&token=" + encodeURIComponent(token) + "&userId=" + encodeURIComponent(authorId);
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>石头剪刀布小游戏</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url('http://localhost:8011/helloworld/images/game_background.jpg');
+            background-size: cover; /* 背景图片将被拉伸或压缩以适应整个屏幕 */
+            background-position: center; /* 背景图片居中显示 */
+            background-repeat: no-repeat; /* 防止背景图片重复 */
+        }
+        h3 {
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            color: #fff;
+            background-color: #007BFF;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        span {
+            font-size: 20px;
+            color: #007BFF;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h3>石头剪刀布小游戏</h3>
+    <button id="shitou" onclick="HandleGame('shitou')">石头</button>
+    <button id="jiandao" onclick="HandleGame('jiandao')">剪刀</button>
+    <button id="bu" onclick="HandleGame('bu')">布</button>
+    <span>系统出拳:</span>
+    <span id="jieguo"></span>
+    <script>
+        async function HandleGame(clickedButtonId) {
+            let zhi = -1; //0剪刀、1石头、2布：三个按钮
+            switch (clickedButtonId) { // 根据按钮的ID执行相应的逻辑
+                case 'shitou':
+                    zhi = 1;
+                    console.log('石头按钮被点击');
+                    break;
+                case 'jiandao':
+                    zhi = 0;
+                    console.log('剪刀按钮被点击');
+                    break;
+                case 'bu':
+                    zhi = 2;
+                    console.log('布按钮被点击');
+                    break;
+                default:
+                    console.log('未知按钮被点击');
+                    return;
+            }
+            const url = "http://localhost:8080/helloworld/game";
+            try {
+                const response = await fetch(url, {
+                    method: "post",
+                    body: new URLSearchParams({ 'zhi': zhi }) // 使用URLSearchParams创建包含zhi变量的对象
+                });
+                const message = await response.text();
+                console.log("message="+message);
+                var jieguo = parseInt(message);
+                if (jieguo == 0) {
+                    document.getElementById("jieguo").innerHTML = "剪刀";
+                } else if (jieguo == 1) {
+                    document.getElementById("jieguo").innerHTML = "石头";
+                } else if (jieguo == 2) {
+                    document.getElementById("jieguo").innerHTML = "布";
+                }
+                if (jieguo == zhi) {
+                    alert("平局！");
+                } else if ((jieguo + 2) % 3 == zhi) {
+                    alert("你输了！");
+                } else if ((jieguo + 1) % 3 == zhi) {
+                    alert("你赢了！");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

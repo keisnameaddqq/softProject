@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影视产品论坛</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .editor-container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        #titleInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #editor {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 400px;
+        }
+    </style>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bass.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/article.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+<body>
+
+    <!--特效-->
+<!--    <script src="./js/背景特效.js"></script>-->
+    <span class="js-cursor-container"></span>
+<!--    <script src="./js/鼠标特效.js"></script>-->
+<!--    <script src="./js/鼠标声效.js"></script>-->
+
+    <!-- 获取必要的用户信息-->
+    <script src="./js/caozuojs/获取用户必要信息.js"></script>
+    <!-- 头部导航栏 -->
+    <header class="table-bordered" style=" background-color: #11789664;">
+        <div class="h container row ">
+            <a href="./index.html"><img src="./images/logo.png" alt="" width="80px" height="40px" class="col-sm-1 "></a>
+            <div class="container col-sm-9 ">
+                <ul class="headlist col-sm-4 row-no-gutters">
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list1" href="./finishlogin.html">首页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list2" href="./main.html">主页</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list3" href="./editer.html" style="font-weight: 700;">个人创作</a></li>
+                    <li class="" style="margin: 0 15px;text-align: center"><a id="list4" href="./create.html">主题创作</a></li>
+                </ul>
+                <div class="col-sm-7 col-sm-offset-1 row-no-gutters">
+                    <input type="search" placeholder="想看什么文章呢？" class="col-sm-8" style="padding-left: 10px;" id="searchInput">
+                    <button type="button" class="btn btn-success col-sm-1" onclick="getSearchInputValue()" id="searchInputclick"><i></i></button>
+                    <button type="button" class="btn btn-success col-sm-2 col-sm-offset-1">提问</button>
+                </div>
+            </div>
+            <div class=" col-sm-2 login">
+                <a href="#" class="col-sm-3" title="信息"><i></i></a>
+                <a class="col-sm-6" id="wqerqwerqqrerqwerqwreqrq" src="./menduserdata.html">
+                    <img height='40px' src="" alt='用户头像' id="sdfadsfadfasdffds">
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- 处理查询的跳转-->
+    <script src="./js/caozuojs/处理导航连接.js"></script>
+
+    <!-- 编辑文章的设置-->
+    <div class="editor-container">
+        <div class="editor-toolbar">
+            <button onclick="formatText('bold')"><b>B</b></button>
+            <button onclick="formatText('italic')"><i>I</i></button>
+            <button onclick="formatText('underline')"><u>U</u></button>
+            <input type="file" id="imageInput" accept="image/*" style="display: none" multiple>
+            <div id="uploadButton">
+                <i class="fa fa-file-picture-o"></i>
+            </div>
+            <input type="file" id="audioInput" accept="audio/*,video/*" style="display: none" multiple>
+            <div id="uploadAudioButton">
+                <i class="fa fa-file-audio-o"></i>
+            </div>
+        </div>
+        <input type="text" id="titleInput" placeholder="输入标题..." required>
+        <div id="editor" contenteditable="true"></div>
+        <button onclick="submitArticle('false')" style="background-color: azure;border: 2px solid black;">提交文章</button>
+    </div>
+
+    <!-- 对图片和音频的提交和显示的处理-->
+    <script>
+        //对文本的属性进行修改
+        function formatText(command, value = null) {
+            document.execCommand(command, false, value);
+        }
+        //添加图片
+        document.getElementById('uploadButton').addEventListener('click', function () {
+            document.getElementById('imageInput').click(); // 触发文件选择
+        });
+        document.getElementById('imageInput').addEventListener('change', async function () {
+            const files = this.files; // 获取选定的文件列表
+            if (files.length > 0) {
+                const imageContainer = document.getElementById('editor');
+                for (let i = 0; i < files.length; i++) {
+                    var url = await getPictureUrl(files[i], './loadpicture');
+                    if (url != null) {
+                        const imageElement = document.createElement('img');
+                        imageElement.src = url;
+                        imageElement.classList.add('draggable-image');
+                        imageElement.style.width = '250px'; // 设置图片宽度
+                        imageElement.style.height = '250px'; // 设置图片宽度
+                        // imageElement.style.height = '250px'; // 设置图片高度
+                        imageContainer.appendChild(imageElement); // 将包装器添加到页面中的指定容器
+                    }
+                }
+            }
+        });
+        async function getPictureUrl(pictureFile, address) {
+            const formData = new FormData(); // 创建一个 FormData 对象
+            formData.append('picture', pictureFile);
+            try {
+                const response = await fetch(address, { // 使用 Fetch API 将文件上传到服务器
+                    method: 'POST',
+                    body: formData
+                });
+                const url = await response.text();
+                console.log("获取到了" + url);
+                return url ;
+            } catch (error) {
+                alert('上传图片出错:', error);
+                return null;
+            }
+        }
+        //添加音频
+        document.getElementById('uploadAudioButton').addEventListener('click', function () {
+            document.getElementById('audioInput').click(); // 触发音频文件选择
+        });
+        document.getElementById('audioInput').addEventListener('change', async function () {
+            const files = this.files; // 获取选定的音频文件列表
+            if (files.length > 0) {
+                const audioContainer = document.getElementById('editor');
+                for (let i = 0; i < files.length; i++) {
+                    var url = await getAudioUrl(files[i], './uploadaudio');
+                    if (url != null) {
+                        const audioElement = document.createElement('video');
+                        audioElement.src = url;
+                        audioElement.controls = true; // 显示控制条
+                        audioElement.style = "display:inline; max-height: 200px;"; // 使用 style 属性设置样式
+                        audioElement.maxheight="100px";
+                        audioContainer.innerHTML+="&nbsp";
+                        audioContainer.appendChild(audioElement); // 将包装器添加到页面中的指定容器
+                        audioContainer.innerHTML+="&nbsp";
+                    }
+                }
+            }
+            // 设置焦点回可编辑的div
+            document.getElementById('editor').focus();
+        });
+        async function getAudioUrl(audioFile, address) {
+            const formData = new FormData(); // 创建一个 FormData 对象
+            formData.append('audio', audioFile);
+            formData.append('userId',userId);
+            try {
+                const response = await fetch(address, {
+                    method: 'POST',
+                    body: formData
+                });
+                const url = await response.text();
+                console.log("vidio-url="+url)
+                return url;
+            } catch (error) {
+                alert('上传音频出错:', error);
+                return null;
+            }
+        }
+    </script>
+
+    <!-- 提交文章到服务器中-->
+    <script>
+        async function submitArticle(whatevercontinue) {
+            var articleContent = document.getElementById('editor').innerHTML;
+            var articleTitle = document.getElementById('titleInput').value;
+            const formData = new FormData(); // 创建一个 FormData 对象
+            formData.append('title', articleTitle);
+            formData.append('content', articleContent);
+            formData.append('userId',userId);
+            formData.append('token',token);
+            formData.append('whatevercontinue',whatevercontinue);
+            try {
+                const response = await fetch('./uploadarticle', { // 使用 Fetch API 将文件上传到服务器
+                    method: 'POST',
+                    body: formData
+                });
+                const jieguo = await response.text();
+                if(jieguo==='true'){
+                    alert("文章成功上传！")
+                    console.log('文章成功上传！');
+                } else if(jieguo==='title is existing'){
+                    console.log('已存在相同标题的文章！');
+                    var panduan = confirm("已存在相同标题的文章,是否坚持添加文章？");
+                    if(panduan){
+                        submitArticle('true');
+                    }
+                } else if(jieguo==='你的文章中包含’敏感词‘'){
+                    console.log('你的文章中包含’敏感词‘');
+                    alert("你的文章中包含’敏感词‘");
+                } else{
+                    console.log("jieguo="+jieguo);
+                    alert("文章上传失败！")
+                    console.log('文章上传失败！');
+                }
+            } catch (error) {
+                alert('上传文章出错:', error);
+                return null;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

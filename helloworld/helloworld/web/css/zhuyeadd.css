@@ -1,0 +1,92 @@
+.beijing {
+  display: block;
+  height: 132px;
+  width: 1000px;
+  background-color: #776d6da1;
+  margin: auto;
+  position: relative;
+}
+
+.body {
+  background-color: rgb(210, 206, 206);
+}
+
+.nameandata {
+  display: block;
+  height: 132px;
+  width: 1000px;
+  background-color: rgb(255, 255, 255);
+  margin: auto;
+  position: relative;
+}
+
+.opuoiu {
+  position: absolute;
+  top: 50px;
+  left: 870px;
+  background-color: rgba(25, 255, 255, 0.3);
+}
+
+.zhuyefirst {
+  height: auto;
+  width: auto;
+  margin-top: 20px;
+}
+
+.zhuyefirstson {
+  position: absolute;
+  top: -30px;
+  left: 30px;
+  height: 130px;
+  width: 130px;
+  padding: 3px;
+  background-color: white;
+}
+
+.zhuyefirstsecondson {
+  width: 694px;
+  height: 350px;
+  background-color: aliceblue;
+  display: block;
+  float: left;
+}
+
+.zhuyesecond {
+  display: block;
+  height: 132px;
+  width: 1000px;
+  background-color: rgb(255, 255, 255);
+  margin: 10px auto auto;
+}
+
+.ppdiv {
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.pppfasdfa {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pppfasdfa li {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pppfasdfa li:active {
+  border-bottom: 2px solid black;
+}
+
+.pfasdfsd1 {
+  display: inline-block;
+  margin-top: 50px;
+}
+
+
+.namefadsfsadfa{
+  display: inline-block;
+  margin-top: 50px;
+  height: 100px;
+}

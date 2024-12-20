@@ -1,0 +1,196 @@
+@font-face {  /* 声明字体 */
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?8qhwk5');
+  src:  url('../fonts/icomoon.eot?8qhwk5#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?8qhwk5') format('truetype'),
+    url('../fonts/icomoon.woff?8qhwk5') format('woff'),
+    url('../fonts/icomoon.svg?8qhwk5#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.index{
+    background-color: #f6f6f6;
+    height: 1800px;
+}
+ .setable{
+    width: 1200px;
+    transform: translate(3.5%,2%)
+ }
+.main-table{
+    min-height: 1000px;
+    background-color: #fff;
+    box-shadow: 0 0px 3px rgb(136, 136, 136);
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+
+.nav{
+    height: 72px;
+    list-style: none;
+    font-size: 16px;
+    overflow: hidden;
+}
+.nav li{
+    margin: 0 18px 0 40px;
+    float: left;
+    transform: translateY(40%);
+}
+.nav a{
+    color: black;
+}
+.nav a:hover {
+    color:#567ff0 ;
+
+}
+.articles{
+    margin-bottom: 20px;
+     border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgb(218, 218, 218);
+}
+.articles p{
+    font-size: 16px;
+    float:left;
+}
+.articles a{
+    text-decoration: none;
+    color: black;
+    font-weight:600;
+}
+.articles a i{
+    font-family: "icomoon";
+    font-style: normal;
+}
+
+.jj{
+    font-size: 17px;
+    color: #8690a6;
+}
+.personal-information{
+    background-color: #fff;
+    padding: 0 5px 0 5px;
+    display:none;
+    position: absolute;
+    width: 430px;
+    height: 230px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    font-size: 18px;
+    z-index: 2;
+}
+.pitop{
+    height: 80px;
+    border-bottom: 2px solid #f6f6f6;
+    padding-left: 20px;
+    color: black;
+}
+.pitop div{
+    position: absolute;
+    top: 15px;
+    left: 120px;
+    font-style: normal;
+}
+.pitop .cnmd{
+    top:45px;
+}
+.pibottom{
+    width: 230px;
+}
+.pibottom ul{
+    list-style: none;
+}
+.pibottom ul li{
+    float: left;
+    position: relative;
+}
+.mess:hover .personal-information{
+    display: block;
+}
+.shuju{
+    position: absolute;
+    top: 125px;
+    
+    color:black;
+    font-weight: 700;
+}
+.pibottom button{
+    position: absolute;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.pibottom button i{
+    font-family: "icomoon";
+    font-style: normal;
+}
+.function-as{
+    height: 50px;
+   
+}
+.function-as ul{
+    list-style:none;
+    float: left;
+    padding: 0;
+} 
+.function-as li{
+    line-height: 50px;
+    float: left ;
+    margin: 0 10px 0 10px;
+}
+.function-as  button{
+    transform: translateY(-10%);
+    color: #34ce34;
+    background-color: #e9ffe9;
+    float: right;
+}
+.function-as button i{
+    font-family:"icomoon";
+    font-style:normal;
+}
+.function-as a i{
+    font-style: normal;
+    font-family: "icomoon";
+    font-size: 16px;
+    color: #8690a6;
+    font-weight: 500;
+}   
+
+.expand{
+    height: 1600px;
+    margin-left:20px;
+  
+    padding: 0;
+}
+.block-{
+    box-shadow: 0 0px 3px rgb(136, 136, 136);
+    position: relative;
+    background-color: #fff;
+    margin-bottom: 20px;
+    width: 292.5px;
+}
+.block- ul{
+    list-style:none;
+    padding-left: 0;
+}
+.block- li{
+    height: 50px;
+    line-height: 50px;
+    padding-left: 35px ;
+}
+.block- li:hover{
+    background-color: #f6f6f6;
+}
+.block-  a{
+    font-size: 16px;
+    text-decoration: none;   
+    color: #8690a6; 
+}
+.block- i{
+    font-family: "icomoon";
+    font-style: normal;
+}
+.bq    a:hover{
+    color: #41997c;
+}
